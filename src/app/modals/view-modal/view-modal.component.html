@@ -1,0 +1,10 @@
+<div nz-form nzLayout="vertical">
+
+  <nz-form-item *ngFor="let form of initialValues">
+    <nz-form-label>{{ form?.config?.label ? form?.config?.label : form.label }}</nz-form-label>
+    <nz-form-control>
+      <input type="text" nz-input disabled  *ngIf="form.type !== 'button'"/>
+      <input [type]="form.type"  disabled [value]="form?.config?.label ? form?.config?.label : form.label" *ngIf="form.type === 'button'"/>
+    </nz-form-control>
+  </nz-form-item>
+</div>

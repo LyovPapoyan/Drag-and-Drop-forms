@@ -1,0 +1,12 @@
+<nz-form-item>
+  <nz-form-label nzRequired="">Name</nz-form-label>
+  <nz-form-control [nzErrorTip]="validationMessage">
+    <input type="text" nz-input [formControl]="name" />
+  </nz-form-control>
+</nz-form-item>
+
+<ng-template #validationMessage let-control>
+  <ng-container *ngIf="control.hasError('required')">
+    This Field is required
+  </ng-container>
+</ng-template>

@@ -1,0 +1,95 @@
+<div class="wrapper">
+  <div
+    id="listOne"
+    class="form-list"
+    cdkDropList
+    [cdkDropListData]="formsList"
+    [cdkDropListConnectedTo]="['listTwo']"
+    (cdkDropListDropped)="drop($event)"
+  >
+  <div nz-form nzLayout="vertical">
+    <div class="box" cdkDrag *ngFor="let form of formsList">
+      <ng-container *ngIf="form.type !== 'button'">
+      <nz-form-item>
+        <nz-form-label>{{ form.label }}</nz-form-label>
+        <nz-form-control>
+          <input nz-input [type]="form.type"/>
+        </nz-form-control>
+      </nz-form-item>
+      </ng-container>
+      <ng-container *ngIf="form.type === 'button'">
+          <nz-form-item>
+            <nz-form-label>Submitasa</nz-form-label>
+            <nz-form-control>
+              <input class="submit-button" [type]="form.type" [value]="form.label">
+            </nz-form-control>
+          </nz-form-item>
+    </ng-container>
+    </div>
+  </div>
+  </div>
+  <div class="user-form-container forms">
+    <h3>Drop Here</h3>
+    <div
+      id="listTwo"
+      class="user-form-list "
+      cdkDropList
+      [cdkDropListData]="userForms"
+      (cdkDropListDropped)="drop($event)"
+    >
+    <div nz-form nzLayout="vertical">
+      <div
+        class="box"
+        *ngFor="let form of userForms; let index = index"
+        cdkDrag
+      >
+      <ng-container *ngIf="form.type !== 'button'">
+        <nz-form-item>
+          <nz-form-label>{{ form?.config?.label ? form?.config?.label : form.label}}</nz-form-label>
+          <nz-form-control>
+            <input
+              nz-input
+              [type]="form.type"
+              disabled
+            />
+          </nz-form-control>
+         </nz-form-item>
+        </ng-container>
+        <ng-container *ngIf="form.type === 'button'">
+          <input class="submit-button" [type]="form.type" [value]="form?.config?.label ? form?.config?.label : form.label">
+        </ng-container>
+        <div class="action-buttons">
+          <button nz-button nzType="primary" (click)="editForm(form)" class="edit">Edit</button>
+          <button nz-button nzType="primary" (click)="deleteForm(index)" nzDanger class="delete">Delete</button>
+        </div>
+      </div>
+    </div>
+      <div class="save-button" *ngIf="userForms.length">
+        <button nz-button nzType="primary" (click)="save()" class="submit">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="table-wrapper">
+<nz-table [nzData]="allForms" *ngIf="allForms.length" nzFrontPagination="false">
+  <thead>
+    <tr>
+      <th nzWidth="300px" nzAlign="center">Name</th>
+      <th nzWidth="300px" nzAlign="center">Created date</th>
+      <th nzWidth="240px" nzAlign="center">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of allForms; let index = index">
+      <td nzAlign="center">{{ data.name }}</td>
+      <td nzAlign="center">{{ data.created_date | date }}</td>
+      <td class="table-buttons">
+       <button nz-button  (click)="view(data.value)">View</button>
+       <button nz-button nzType="primary" (click)="edit(data.value)">Edit</button>
+       <button nz-button nzType="primary" (click)="deleteFromAllForm(index)" nzDanger>Delete</button>
+      </td>
+    </tr>
+  </tbody>
+ </nz-table>
+</div>
